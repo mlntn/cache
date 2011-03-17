@@ -9,7 +9,7 @@ class FileCache {
 	public function __construct($prefix = 'cache', $lifetime = 3600, $path = '../../../cache/') {
 		$this->lifetime  = $lifetime;
 		$this->prefix    = $prefix;
-		$this->path      = dirname(__FILE__) . DIRECTORY_SEPARATOR . $path;
+		$this->path      = realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . $path) . DIRECTORY_SEPARATOR;
 	}
 
 	public function set($key, $response) {
@@ -19,7 +19,7 @@ class FileCache {
 	public function get($key) {
 		$c = $this->getFilename($key);
 
-		if ($this->has($c)) {
+		if ($this->has($key)) {
 			return unserialize(file_get_contents($c));
 		}
 
